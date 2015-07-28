@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject[] antArray;
+	public GameObject[] SoldierArray;
     //public Vector3 rightSideValues; //Allows you to modify the hazard's position when it is instantiated in the unity editor.
     //public Vector3 leftSideValues;
     public Transform rightSpawner;
@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
     {
              if (Input.GetKeyDown(KeyCode.Escape))
              {
-                 pause = true;      //This bollean causes the OnGUI() method to open the pause menu.
+                 pause = true;      //This boolean causes the OnGUI() method to open the pause menu.
              }
     }
 
@@ -41,14 +41,18 @@ public class GameController : MonoBehaviour
                 if (pause == true) { break; }
                 for (int i = 0; i< antCount; i++)
                 {
-                    GameObject antPrefab = antArray[Random.Range(0, antArray.Length)];
+					GameObject SoldierPrefab = SoldierArray[Random.Range(0, SoldierArray.Length)];
                     //Vector3 spawnPosition = new Vector3(Random.Range(-rightSideValues.x, rightSideValues.x), rightSideValues.y, rightSideValues.z);         //inserts the values from the unity editor into the hazard's spawnPosition.
                     //Vector3 leftSidePosition = new Vector3(Random.Range(-leftSideValues.x, leftSideValues.x), leftSideValues.y, leftSideValues.z);
                     
                     //Quaternion spawnRotation = Quaternion.identity;     //Means our Ants will have no new rotation.
                     //Quaternion leftSideRotation = Quaternion.Euler(0,180,0);
-                    Instantiate(antPrefab, rightSpawner.position, rightSpawner.rotation);
-                    Instantiate(antPrefab, leftSpawner.position, leftSpawner.rotation);
+					GameObject rightSoldier = (GameObject)Instantiate(SoldierPrefab, rightSpawner.position, rightSpawner.rotation);
+					GameObject leftSoldier = (GameObject)Instantiate(SoldierPrefab, leftSpawner.position, leftSpawner.rotation);
+					
+					rightSoldier.gameObject.tag = "rightTeam"; 				//Sets the teams
+					leftSoldier.gameObject.tag = "leftTeam";
+
                     yield return new WaitForSeconds(spawnWait);
                 }
                 yield return new WaitForSeconds(waiveWait);

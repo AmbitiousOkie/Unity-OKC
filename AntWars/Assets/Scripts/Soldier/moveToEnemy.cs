@@ -3,7 +3,9 @@ using System.Collections;
 
 public class moveToEnemy : MonoBehaviour {
 
-	public Transform target;
+	public Transform rightTarget;
+	public Transform leftTarget;
+	Transform target;
 	Vector3 destination;
 	NavMeshAgent agent;
 	
@@ -11,6 +13,13 @@ public class moveToEnemy : MonoBehaviour {
 		// Cache agent component and destination
 		agent = GetComponent<NavMeshAgent>();
 		destination = agent.destination;
+
+		if (this.gameObject.tag == "rightTeam") {
+			target = rightTarget;
+		} else {
+			target = leftTarget;
+		}
+
 	}
 	
 	void Update () {
